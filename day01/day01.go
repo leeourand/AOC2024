@@ -46,16 +46,18 @@ func sumDiffs(list1, list2 []int) int {
 
 // Part 2
 func sumCounts(list1, list2 []int) int {
-	sum := 0
-	for _, ch := range list1 {
-		count := 0
-		for _, ch2 := range list2 {
-			if ch == ch2 {
-				count += 1
-			}
-		}
-		sum += count * int(ch)
+	countMap := make(map[int]int)
+
+	for _, ch := range list2 {
+		countMap[ch]++
 	}
+
+	sum := 0
+
+	for _, ch := range list1 {
+		sum += countMap[ch] * int(ch)
+	}
+
 	return sum
 }
 
