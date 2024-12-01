@@ -16,13 +16,11 @@ func check(e error) {
 	}
 }
 
-type list []int
-
 func main() {
 	dat, err := os.ReadFile("input_data/puzzle.txt")
 	check(err)
-	var list1 list
-	var list2 list
+	var list1 []int
+	var list2 []int
 	buildLists(dat, &list1, &list2)
 
 	sumDiffs := sumDiffs(list1, list2)
@@ -33,7 +31,7 @@ func main() {
 }
 
 // Part 1
-func sumDiffs(list1, list2 list) int {
+func sumDiffs(list1, list2 []int) int {
 	sort.Ints(list1)
 	sort.Ints(list2)
 
@@ -47,7 +45,7 @@ func sumDiffs(list1, list2 list) int {
 }
 
 // Part 2
-func sumCounts(list1, list2 list) int {
+func sumCounts(list1, list2 []int) int {
 	sum := 0
 	for _, ch := range list1 {
 		count := 0
@@ -61,7 +59,7 @@ func sumCounts(list1, list2 list) int {
 	return sum
 }
 
-func buildLists(bytes []byte, list1 *list, list2 *list) {
+func buildLists(bytes []byte, list1 *[]int, list2 *[]int) {
 	scanner := bufio.NewScanner(strings.NewReader(string(bytes)))
 	for scanner.Scan() {
 		line := scanner.Text()
