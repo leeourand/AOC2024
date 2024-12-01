@@ -23,17 +23,17 @@ func main() {
 	check(err)
 	var list1 list
 	var list2 list
-	build_lists(dat, &list1, &list2)
+	buildLists(dat, &list1, &list2)
 
-	sum_diffs := sum_diffs(list1, list2)
-	sum_counts := sum_counts(list1, list2)
+	sumDiffs := sumDiffs(list1, list2)
+	sumCounts := sumCounts(list1, list2)
 
-	fmt.Printf("Sum of diffs: %d\n", sum_diffs)
-	fmt.Printf("Sum of counts: %d\n", sum_counts)
+	fmt.Printf("Sum of diffs: %d\n", sumDiffs)
+	fmt.Printf("Sum of counts: %d\n", sumCounts)
 }
 
 // Part 1
-func sum_diffs(list1, list2 list) int {
+func sumDiffs(list1, list2 list) int {
 	sort.Ints(list1)
 	sort.Ints(list2)
 
@@ -48,7 +48,7 @@ func sum_diffs(list1, list2 list) int {
 }
 
 // Part 2
-func sum_counts(list1, list2 list) int {
+func sumCounts(list1, list2 list) int {
 	sum := 0
 	for _, ch := range list1 {
 		count := 0
@@ -62,7 +62,7 @@ func sum_counts(list1, list2 list) int {
 	return sum
 }
 
-func build_lists(bytes []byte, list1 *list, list2 *list) {
+func buildLists(bytes []byte, list1 *list, list2 *list) {
 	scanner := bufio.NewScanner(strings.NewReader(string(bytes)))
 	for scanner.Scan() {
 		line := scanner.Text()
