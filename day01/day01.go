@@ -41,8 +41,7 @@ func sumDiffs(list1, list2 list) int {
 
 	for i, ch := range list1 {
 		diff := ch - list2[i]
-		abs_diff := max(diff, -diff)
-		sum += abs_diff
+		sum += abs(diff)
 	}
 	return sum
 }
@@ -79,5 +78,13 @@ func buildLists(bytes []byte, list1 *list, list2 *list) {
 			*list1 = append(*list1, num1)
 			*list2 = append(*list2, num2)
 		}
+	}
+}
+
+func abs(val int) int {
+	if val >= 0 {
+		return val
+	} else {
+		return -val
 	}
 }
