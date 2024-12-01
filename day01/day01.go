@@ -25,16 +25,41 @@ func main() {
 	var list2 list
 	build_lists(dat, &list1, &list2)
 
-	sum := 0
+	sum_diffs := sum_diffs(list1, list2)
+	sum_counts := sum_counts(list1, list2)
+
+	fmt.Printf("Sum of diffs: %d\n", sum_diffs)
+	fmt.Printf("Sum of counts: %d\n", sum_counts)
+}
+
+// Part 1
+func sum_diffs(list1, list2 list) int {
 	sort.Ints(list1)
 	sort.Ints(list2)
+
+	var sum int
 
 	for i, ch := range list1 {
 		diff := ch - list2[i]
 		abs_diff := max(diff, -diff)
 		sum += abs_diff
 	}
-	fmt.Println(sum)
+	return sum
+}
+
+// Part 2
+func sum_counts(list1, list2 list) int {
+	sum := 0
+	for _, ch := range list1 {
+		count := 0
+		for _, ch2 := range list2 {
+			if ch == ch2 {
+				count += 1
+			}
+		}
+		sum += count * int(ch)
+	}
+	return sum
 }
 
 func build_lists(bytes []byte, list1 *list, list2 *list) {
