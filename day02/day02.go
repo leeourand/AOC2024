@@ -23,9 +23,9 @@ func main() {
 	var safe int
 	var safeWithTolerances int
 	for _, r := range reports {
-		if reportIsSafe(r) {
+		if r.IsSafe() {
 			safe++
-		} else if reportIsSafeWithTolerances(r) {
+		} else if r.IsSafeWithTolerances() {
 			safeWithTolerances++
 		}
 	}
@@ -56,14 +56,14 @@ func buildReports() []Report {
 	return reports
 }
 
-func reportIsSafeWithTolerances(r Report) bool {
-	if hasError(r) {
+func (r Report) IsSafeWithTolerances() bool {
+	if r.hasError() {
 		for i := range len(r) {
-			tweakedReport := make([]Level, len(r)-1) // Assume ElementType is the correct type of elements in Report
+			tweakedReport := Report(make([]Level, len(r)-1))
 			copy(tweakedReport, r[:i])
 			copy(tweakedReport[i:], r[i+1:])
 
-			if !hasError(tweakedReport) {
+			if !tweakedReport.hasError() {
 				return true
 			}
 		}
@@ -73,11 +73,11 @@ func reportIsSafeWithTolerances(r Report) bool {
 	return false
 }
 
-func reportIsSafe(r Report) bool {
-	return !hasError(r)
+func (r Report) IsSafe() bool {
+	return !r.hasError()
 }
 
-func hasError(r Report) bool {
+func (r Report) hasError() bool {
 	var ascending bool
 
 	for i, level := range r {
