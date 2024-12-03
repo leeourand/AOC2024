@@ -17,12 +17,34 @@ func main() {
 	bytes, err := os.ReadFile("input_data/puzzle.txt")
 	check(err)
 	var sum int
+	parsing := true
 
-	for i, byte := range(bytes) {
-		if byte == 'm' {
-			if bytes[i + 1] == 'u' {
-				if bytes[i + 2] == 'l' {
-					if bytes[i + 3] == '(' {
+	for i, byte := range bytes {
+		if byte == 'd' {
+			if bytes[i+1] == 'o' {
+				if bytes[i+2] == 'n' {
+					if bytes[i+3] == '\'' {
+						if bytes[i+4] == 't' {
+							if bytes[i+5] == '(' {
+								if bytes[i+6] == ')' {
+									parsing = false
+								}
+							}
+						}
+					}
+				}
+				if bytes[i+2] == '(' {
+					if bytes[i+3] == ')' {
+						parsing = true
+					}
+				}
+			}
+		}
+
+		if byte == 'm' && parsing {
+			if bytes[i+1] == 'u' {
+				if bytes[i+2] == 'l' {
+					if bytes[i+3] == '(' {
 						j := i + 4
 						for isDigit(bytes[j]) {
 							j++
