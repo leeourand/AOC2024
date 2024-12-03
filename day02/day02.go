@@ -6,6 +6,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	. "aoc2024/day02/report"
 )
 
 func check(e error) {
@@ -14,9 +16,6 @@ func check(e error) {
 		panic(e)
 	}
 }
-
-type Level int
-type Report []Level
 
 func main() {
 	reports := buildReports()
@@ -54,51 +53,4 @@ func buildReports() []Report {
 		reports = append(reports, report)
 	}
 	return reports
-}
-
-func (r Report) IsSafeWithTolerances() bool {
-	if r.hasError() {
-		for i := range len(r) {
-			tweakedReport := Report(make([]Level, len(r)-1))
-			copy(tweakedReport, r[:i])
-			copy(tweakedReport[i:], r[i+1:])
-
-			if !tweakedReport.hasError() {
-				return true
-			}
-		}
-	} else {
-		return true
-	}
-	return false
-}
-
-func (r Report) IsSafe() bool {
-	return !r.hasError()
-}
-
-func (r Report) hasError() bool {
-	var ascending bool
-
-	for i, level := range r {
-		if i > 0 {
-			previous := r[i-1]
-			if ascending {
-				if level <= previous {
-					return true
-				} else if (level - previous) > 3 {
-					return true
-				}
-			} else {
-				if level >= previous {
-					return true
-				} else if (previous - level) > 3 {
-					return true
-				}
-			}
-		} else {
-			ascending = level < r[i+1]
-		}
-	}
-	return false
 }
